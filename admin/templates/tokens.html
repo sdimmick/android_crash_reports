@@ -1,0 +1,34 @@
+<html>
+  <body>
+    <form action="/admin/tokens" method="post">
+      <input type="submit" value="New token">
+    </form>
+
+    <table>
+    {% for token in tokens %}
+      <tr>
+        <td>{{ token.token }}</td> 
+        <td><button class="delete-btn" data-token="{{ token.token }}">delete</button></td>
+      </tr>
+    {% endfor %}
+    </table>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $('.delete-btn').click(function() {
+          $.ajax({
+            url: '/admin/tokens',
+            type: 'DELETE',
+            data: { 'token': $(this).data('token') },
+            success: function(result) {
+              document.location.reload(true);
+            }
+          });    
+        });
+      });
+    </script>
+  </body>
+</html>

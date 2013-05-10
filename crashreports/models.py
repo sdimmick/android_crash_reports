@@ -27,3 +27,4 @@ class CrashReport(ndb.Model):
     total_mem_size          = ndb.TextProperty()
     user_app_start_date     = ndb.DateTimeProperty()
     user_crash_date         = ndb.DateTimeProperty()
+

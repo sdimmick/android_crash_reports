@@ -4,7 +4,7 @@ import urllib2
 PIVOTAL_STORY_XML = '''
     <story>
         <story_type>bug</story_type>
-        <name>Fix: %s</name>
+        <name>%s</name>
         <description>%s</description>
     </story>'''
 
@@ -16,9 +16,6 @@ class PivotalApi:
         self.auth_token = auth_token
 
     def createbug(self, report, base_url):
-        print self.project_id
-        print self.auth_token
-
         report_url = base_url + '/api/crashreport/' + str(report.key.id())
         xml = PIVOTAL_STORY_XML % (report.stack_summary, report_url)
         create_story_url = PIVOTAL_STORY_URL % self.project_id

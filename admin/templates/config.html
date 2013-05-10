@@ -1,0 +1,17 @@
+<html>
+  <body>
+    <form action="/admin/config" method="post">
+      <table>
+        <tr>
+          <td><label for="pivotal_project_id">Pivotal Tracker project ID:</label></td>
+          <td><input type="text" id="pivotal_project_id" name="pivotal_project_id" value="{{ config.pivotal_project_id|default:"" }}" size="40"></td>
+        </tr>
+        <tr>
+          <td><label for="pivotal_auth_token">Pivotal Tracker auth token:</label></td>
+          <td><input type="text" id="pivotal_auth_token" name="pivotal_auth_token" value="{{ config.pivotal_auth_token|default:"" }}" size="40"></td>
+        </tr>
+      </table>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

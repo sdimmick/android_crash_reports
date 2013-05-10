@@ -1,0 +1,22 @@
+<html>
+  <body>
+    <h3>{{ report.stack_summary }}</h3>
+
+    <table>
+      <tr>
+        <td>Package name:</td>
+        <td>{{ report.package_name }}</td>
+      </tr>
+      <tr>
+        <td>App version:</td>
+        <td>{{ report.app_version_name }}</td>
+      </tr>
+      <tr>
+        <td>Android version:</td>
+        <td>{{ report.android_version }}</td>
+      </tr>
+    </table>
+
+    <pre>{{ report.stack_trace }}</pre>
+  </body>
+</html>

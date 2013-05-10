@@ -5,5 +5,7 @@ api_version: 1
 threadsafe: true
 
 handlers:
-- url: /.*
-  script: crashreports.api.application
+- url: /api/.*
+  script: crashreports.api.app
+- url: /admin/.*
+  script: admin.admin.app
