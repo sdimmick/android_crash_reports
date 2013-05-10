@@ -47,7 +47,7 @@ class CrashReportHandler(webapp2.RequestHandler):
         self.response.out.write(template.render(path, template_values))
 
 app = webapp2.WSGIApplication([
-    ('/reports/all',             CrashReportListHandler),
+    ('/reports/all',            CrashReportListHandler),
     ('/reports/package/(.*)',   CrashReporsForPackageHandler),
-    ('/reports/(\d+)',           CrashReportHandler),
+    ('/reports/(\d+)',          CrashReportHandler),
     ], debug=True)
