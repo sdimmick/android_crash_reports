@@ -28,3 +28,12 @@ class CrashReport(ndb.Model):
     user_app_start_date     = ndb.DateTimeProperty()
     user_crash_date         = ndb.DateTimeProperty()
 
+    @classmethod
+    def get_all(cls):
+        query = cls.query()
+        return query.fetch()
+
+    @classmethod
+    def for_package(cls, package_name):
+        query = cls.query(cls.package_name == package_name)
+        return query.fetch()

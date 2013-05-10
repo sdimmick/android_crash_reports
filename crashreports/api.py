@@ -93,8 +93,6 @@ class NewCrashReportHandler(webapp2.RequestHandler):
                 summary = summary + ' ' + line.strip('\t')
                 break
 
-        print summary
-        
         # Stack trace summary = first line + topmost occurance of package_name
         return summary
 

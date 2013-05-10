@@ -3,11 +3,9 @@ import webapp2
 from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
-from google.appengine.ext.webapp.util import login_required
 from models import Config, AccessToken
 
 class ConfigHandler(webapp2.RequestHandler):
-    @login_required
     def get(self):
         config = Config.get_app_config()
         self.render_template(config)
@@ -37,7 +35,6 @@ class ConfigHandler(webapp2.RequestHandler):
         self.response.out.write(template.render(path, template_values))
 
 class AccessTokenHandler(webapp2.RequestHandler):
-    @login_required
     def get(self):
         tokens = AccessToken.get_all()
         self.render_template(tokens)

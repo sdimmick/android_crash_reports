@@ -7,5 +7,12 @@ threadsafe: true
 handlers:
 - url: /api/.*
   script: crashreports.api.app
+- url: /reports/.*
+  script: crashreports.crashreports.app
+  login: required
 - url: /admin/.*
   script: admin.admin.app
+  login: required
+- url: /
+  script: main.main.app
+  login: required
