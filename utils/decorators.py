@@ -1,5 +1,13 @@
 from google.appengine.api import memcache
 
+'''
+Wraps request handlers in a function that does the following:
+    1. Computes a unique key based on template name and function parameters
+    2. Checks memcache for pre-rendered data at that key
+    3. If no data is found, the request handler is called to render that data,
+       which is then stored at the key.
+    4. Renders the speficied template
+'''
 class cached(object):
     def __init__(self, template):
         self.template = template
