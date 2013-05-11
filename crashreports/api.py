@@ -4,7 +4,7 @@ import webapp2
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import login_required
 from dateutil import parser as dateparser
-from models import CrashReport
+from models import CrashReport, CrashReportGroup
 from admin.models import Config, AccessToken
 from pivotaltracker.api import PivotalApi
 
@@ -47,8 +47,15 @@ class NewCrashReportHandler(webapp2.RequestHandler):
             return AccessToken.is_authorized(params['accessToken'])
 
     def parse_crash_report(self, request):
-        report = CrashReport()
+        # Get or create the parent report group for this crash report
+        package_name = request.get('PACKAGE_NAME')
+        report_group = CrashReportGroup.get_group(package_name)
 
+        # Create a new crash report
+        report = CrashReport(parent=report_group.key)
+
+        # Parse POST body
+        report.package_name             = package_name
         report.android_version          = request.get('ANDROID_VERSION')
         report.app_version_code         = request.get('APP_VERSION_CODE')
         report.app_version_name         = request.get('APP_VERSION_NAME')
@@ -62,7 +69,6 @@ class NewCrashReportHandler(webapp2.RequestHandler):
         report.file_path                = request.get('FILE_PATH')
         report.initial_configuration    = request.get('INITIAL_CONFIGURATION')
         report.installation_id          = request.get('INSTALLATION_ID')
-        report.package_name             = request.get('PACKAGE_NAME')
         report.model                    = request.get('PHONE_MODEL')
         report.product                  = request.get('PRODUCT')
         report.report_id                = request.get('REPORT_ID')
@@ -76,6 +82,12 @@ class NewCrashReportHandler(webapp2.RequestHandler):
         crash_date = dateparser.parse(request.get('USER_CRASH_DATE'), ignoretz=True)
         report.user_app_start_date      = start_date
         report.user_crash_date          = crash_date
+
+        # If this crash report's timestamp is more recent than its parent's
+        # latest crash date, update the parent group
+        if report_group.latest_crash_date == None or report.user_crash_date > report_group.latest_crash_date:
+            report_group.latest_crash_date = report.user_crash_date
+            report_group.put()
 
         # Parse stack trace / summary
         stack_trace = request.get('STACK_TRACE')

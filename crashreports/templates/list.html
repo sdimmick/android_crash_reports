@@ -1,7 +1,7 @@
 <html>
   <body>
     {% for r in reports %}
-    <p><a href="/reports/{{ r|get_id }}">{{ r.stack_summary }}</a></p>
+    <p><a href="/reports/package/{{ r.package_name }}/id/{{ r|get_id }}">{{ r.stack_summary }}</a></p>
     {% endfor %}
   </body>
 </html>

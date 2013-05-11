@@ -1,5 +1,20 @@
 from google.appengine.ext import ndb
 
+class CrashReportGroup(ndb.Model):
+    created_at              = ndb.DateTimeProperty(auto_now_add=True)
+    latest_crash_date       = ndb.DateTimeProperty()
+    package_name            = ndb.StringProperty()
+
+    @classmethod
+    def get_group(cls, package_name):
+        return cls.get_or_insert(package_name)
+
+    def report_count(self):
+        return CrashReport.query(ancestor=self.key).count()
+
+    def _pre_put_hook(self):
+        self.package_name = self.key.string_id()
+
 class CrashReport(ndb.Model):
     created_at              = ndb.DateTimeProperty(auto_now_add=True)
     android_version         = ndb.StringProperty()
