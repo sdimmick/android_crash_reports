@@ -80,7 +80,8 @@ class NewCrashReportHandler(webapp2.RequestHandler):
         # Parse stack trace / summary
         stack_trace = request.get('STACK_TRACE')
         report.stack_trace = stack_trace
-        report.stack_summary = self.get_stack_summary(stack_trace, report.package_name)
+        summary = self.get_stack_summary(stack_trace, report.package_name)
+        report.stack_summary = summary[:500]
 
         return report
 
