@@ -10,8 +10,9 @@ class CrashReportListHandler(webapp2.RequestHandler):
     def get(self):
         # Build a dictionary of crash reports as {report.package_name: report}
         query = CrashReport.query()
+        pairs = query.map(lambda x: (x.package_name, x), projection=[CrashReport.package_name])
         reports = {}
-        for k, v in query.map(lambda x: (x.package_name, x)):
+        for k, v in pairs:
             if reports.has_key(k):
                 reports[k].append(v)
             else:
