@@ -16,12 +16,17 @@ class cached(object):
             return args[0].response.write(cached_data)
         
         return wrapper
-
+    
+    '''
+    Computes a memcache key that looks like either:
+        1. len(args) == 1: template_name
+        2. len(args) > 1:  template_name|arg1|arg2|...
+    '''
     def getkey(self, *args):
         key = self.template
         
         if len(args) > 1:
-            return key + '|' + reduce(lambda x, y: x + '|' + y, args[1:])
+            return key + '|' + reduce(lambda x, y: x + '|' + y, str(args[1:]))
         
         return key
 
