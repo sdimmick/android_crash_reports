@@ -7,8 +7,6 @@ class cached(object):
     def __call__(self, f):
         def wrapper(*args):
             key = self.getkey(*args)
-            print 'key: ', key
-
             cached_data = memcache.get(key)
             
             if cached_data == None:

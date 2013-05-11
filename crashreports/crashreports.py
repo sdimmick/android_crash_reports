@@ -34,8 +34,6 @@ class CrashReporsForPackageHandler(webapp2.RequestHandler):
 
 class CrashReportHandler(webapp2.RequestHandler):
     def get(self, package_name, report_id):
-        print package_name, report_id
-
         group = CrashReportGroup.get_group(package_name)
         report = CrashReport.get_by_id(long(report_id), parent=group.key)
 
