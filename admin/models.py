@@ -2,6 +2,7 @@ import uuid
 from google.appengine.ext import ndb
 
 class Config(ndb.Model):
+    post_to_pivotal         = ndb.BooleanProperty(default=False)
     pivotal_project_id      = ndb.StringProperty()
     pivotal_auth_token      = ndb.StringProperty()
     

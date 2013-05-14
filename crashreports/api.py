@@ -21,10 +21,11 @@ class NewCrashReportHandler(webapp2.RequestHandler):
 
             # Create a bug on Pivotal Tracker
             config = Config.get_app_config()
-            project_id = config.pivotal_project_id
-            auth_token = config.pivotal_auth_token
-            pivotal_api = PivotalApi(project_id, auth_token)
-            pivotal_api.createbug(report, base_url)
+            if config.post_to_pivotal:
+                project_id = config.pivotal_project_id
+                auth_token = config.pivotal_auth_token
+                pivotal_api = PivotalApi(project_id, auth_token)
+                pivotal_api.createbug(report, base_url)
 
             # Return a response
             self.response.headers['Content-Type'] = 'text/plain'

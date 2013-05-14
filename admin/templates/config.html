@@ -3,6 +3,10 @@
     <form action="/admin/config" method="post">
       <table>
         <tr>
+          <td><label for="post_to_pivotal">Post to Pivotal Tracker:</label></td>
+          <td><input type="checkbox" id="post_to_pivotal" name="post_to_pivotal" {% if config.post_to_pivotal %} checked {% endif %} value="true"></td>
+        </tr>
+        <tr>
           <td><label for="pivotal_project_id">Pivotal Tracker project ID:</label></td>
           <td><input type="text" id="pivotal_project_id" name="pivotal_project_id" value="{{ config.pivotal_project_id|default:"" }}" size="40"></td>
         </tr>
